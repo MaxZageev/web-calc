@@ -10,21 +10,57 @@ function clearOutput() {
 }
 
 function updateOutput(value) {
+  const output = document.getElementById("output");
+
+  // Устанавливаем значение в output
   output.textContent = value || "0";
+
+  // Динамическое изменение размера шрифта
+  const maxFontSize = 32; // Максимальный размер шрифта в пикселях
+  const minFontSize = 16; // Минимальный размер шрифта в пикселях
+  const maxCharacters = 10; // Количество символов до уменьшения
+
+  if (value.length > maxCharacters) {
+    const newSize = Math.max(
+      minFontSize,
+      maxFontSize - (value.length - maxCharacters) * 1.5
+    );
+    output.style.fontSize = `${newSize}px`;
+  } else {
+    output.style.fontSize = `${maxFontSize}px`;
+  }
+
+  // Прокрутка вправо (если текст выходит за пределы контейнера)
+  output.scrollLeft = output.scrollWidth;
 }
 
 function appendValue(value) {
   const lastChar = currentInput.slice(-1);
 
-  // Предотвращаем ввод повторной точки
+  // Запрещаем ввод повторной точки
   const lastNumber = currentInput.split(/[\+\-\*\/]/).pop();
   if (value === "." && lastNumber.includes(".")) {
     return;
   }
 
-  // Если перед точкой нет цифры, добавляем "0"
-  if (value === "." && (currentInput === "" || /[\+\-\*\/]$/.test(lastChar))) {
-    currentInput += "0";
+  // Если точка вводится в начале или после оператора, добавляем "0."
+  if (value === "." && (!currentInput || lastChar.match(/[\+\-\*\/]/))) {
+    value = "0.";
+  }
+
+  // Проверяем ввод нулей
+  if (value === "0") {
+    // Если строка пустая, запрещаем ввод нескольких начальных нулей
+    if (currentInput === "" || currentInput.match(/[\+\-\*\/]$/)) {
+      currentInput += value;
+      updateOutput(currentInput);
+      return;
+    }
+
+    // Если в текущем числе уже есть начальный ноль (без точки), запрещаем добавление
+    if (!lastNumber.includes(".") && lastNumber === "0") {
+      return;
+    }
   }
 
   // Сброс результата при новом вводе

@@ -17,34 +17,30 @@ body {
   }
   
   .output-container {
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+    position: relative;
     display: flex;
     align-items: center;
     background: #4355548b;
     color: rgb(255, 255, 255);
     padding: 10px;
   }
-  
-  .clear {
-    background: #ffffff00;
-    color: rgb(0, 0, 0);
-    border: none;
-    font-size: 1.5rem;
-    margin-right: 15px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  
-  .clear:active {
-    transform: scale(0.9);
-  }
-  
+   
   .output {
     flex: 1;
     font-size: 2rem;
-    text-align: right;
-    padding: 10px;
+    white-space: nowrap;
+    text-align: right; /* Текст выравнивается по правому краю */
+    overflow-x: hidden; /* Скрытие горизонтального переполнения */
+    padding: 0 20px; /* Отступ справа для гармоничного вида */
+    box-sizing: border-box;
+    direction: ltr; /* Направление текста слева направо */
+    display: flex;
+    justify-content: flex-end; /* Расположение текста справа */
+    align-items: center; /* Вертикальное выравнивание */
+    transition: font-size 0.2s ease;
   }
   
   .buttons {
@@ -52,6 +48,25 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
     padding: 10px;
+  }
+  .button.delete {
+    background-color: #ff4d4f; /* Красный цвет */
+    color: white; /* Белый текст */
+    font-weight: bold; /* Жирный шрифт */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Скругленные углы */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Тень */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Анимация при наведении */
+  }
+  
+  .button.delete:hover {
+    background-color: #d9363e; /* Темнее при наведении */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3); /* Увеличение тени */
+  }
+  
+  .button.delete:active {
+    transform: scale(0.95); /* Уменьшение при нажатии */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Уменьшение тени */
   }
   
   .btn {
